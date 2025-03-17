@@ -1,0 +1,23 @@
+print("="*72)
+print(f"{'HALO SELAMAT DATANG DIPERMAINAN TEBAK ANGKA BOM':^72}")
+print("="*72)
+print("Pemain 1 ")
+x=int(input("Pilih angka positif sampai : "))
+y=int(input("Pilih angka BOM pada kelipatan : "))
+for a in range(1,x+1):
+    if a%y==0:
+        print("BOM", end=' ')
+    else:
+        print(a, end=' ')
+print("\n")
+print("Pemain 2")
+while True:
+    z=int(input(f"Tebak dari angka 1 sampai {x} : "))
+    if 1<=z<=x:
+        break
+    print(f"PILIH YANG BENER DONG!! \nANGKA {z} TIDAK ADA DALAM RENTANG 1 SAMPAI {x}!!")
+if z%y==0:
+            print(f"YAH ANGKA {z} BOM, KAMU KALAH:( ")
+else: 
+            print(f"YEAY ANGKA {z} BUKAN BOM, SELAMAT KAMU MENANGG!!")
+print("="*72)
