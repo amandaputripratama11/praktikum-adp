@@ -1,0 +1,53 @@
+print("-"*72)
+print(f"|{'SELAMAT DATANG DIPEMESANAN TIKET BIOSKOP':^70}|")
+print("-"*72)
+print()
+r=0
+c=0
+while r < 4 or c < 4:
+    r = int(input("Masukkan jumlah baris kursi bioskop (minimal 4) : "))
+    c = int(input("Masukkan jumlah kolom kursi bioskop (minimal 4) : "))
+    if r < 4 or c < 4:
+        print(f"Ukuran minimal kursi bioskop adalah 4x4.\nMasukan ulang jumlah baris dan kolom kursi dengan benar!!!")
+print()
+print("+------------------------+")
+print("| Tampilan kursi bioskop |")
+print("+------------------------+")
+kursi = {}
+no_kursi = 1
+for i in range(r):
+    for j in range(c):
+        kursi[(i, j)] = no_kursi
+        no_kursi+= 1
+for i in range (r):
+    for j in range(c):
+        print(f"| {kursi[(i,j)]:<2}", end=' ')
+    print( "|")
+print()
+while True:
+    no_pesan=int(input("Pilih nomor kursi yang ingin dipesan (pilih 0 jika sudah selesai) : "))
+    if no_pesan==0:
+        break
+    kursi_ditemukan="tidak"
+    for i in range(r):
+        for j in range(c):
+            if kursi[(i,j)]==no_pesan:
+                kursi[i,j]="X"
+                kursi_ditemukan="ya"
+                print(f"Kursi nomor {no_pesan} berhasil dipesan!")
+                break
+    if kursi_ditemukan=="tidak":
+        print(f"Nomor kursi tidak valid atau sudah dipesan.\nPilih nomor kursi yang tersedia!!")
+        print()
+    print("+------------------------+")
+    print("| Tampilan kursi bioskop |")
+    print("+------------------------+")
+    for i in range(r):
+        for j in range(c):
+            print(f"| {kursi[(i,j)]:<2}", end=' ')
+        print("|")
+    print()
+print("Selesai")
+print("-"*72)
+print(f"|{'TERIMA KASIH SUDAH MEMESAN':^70}|")
+print("-"*72)
