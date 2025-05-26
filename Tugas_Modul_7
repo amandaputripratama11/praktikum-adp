@@ -1,0 +1,53 @@
+def input_data( ):
+    data_mahasiswa=[]
+    jumlah=int(input('Masukkan jumlah mahasiswa: '))
+    for i in range (jumlah):
+        print(f'Mahasiswa ke-{i+1}: ')
+        nama=input("Nama: ")
+        nim=int(input('NIM: '))
+        uts=float(input('Nilai UTS: '))
+        uas=float(input('Nilai UAS: '))
+        tugas=float(input('Nilai Tugas: '))
+        nilai_akhir=round(0.35*uts+0.35*uas+0.30*tugas, 2)
+        data=[nama, nim, uts, uas, tugas, nilai_akhir]
+        data_mahasiswa.append(data)
+    return data_mahasiswa
+
+def rata_rata(data_mahasiswa, index):
+    total=0
+    for mhs in data_mahasiswa:
+        total+=mhs[index]
+    rata=round(total/len(data_mahasiswa), 2)
+    return rata
+
+def peringkat (data_mahasiswa):
+    for i in range(len(data_mahasiswa)):
+        for j in range(0, len(data_mahasiswa)-i-1):
+            if data_mahasiswa[j][5]<data_mahasiswa[j+1][5]:
+                data_mahasiswa[j], data_mahasiswa[j+1]=data_mahasiswa[j+1], data_mahasiswa[j]
+    for i in range(len(data_mahasiswa)):
+        data_mahasiswa[i].append(i+1)
+    return data_mahasiswa
+
+def tabel(data_mahasiswa):
+    print('{:^114}'.format('TABEL DATA NILAI DAN PERINGKAT MAHASISWA'))
+    print('-'*114)
+    print('|{:^25} |{:^15} |{:^12} |{:^12} |{:^12} |{:^12}| {:^12}|'.format(' Nama Mahasiswa ',' NIM ',' Nilai UTS ','Nilai UAS','Nilai Tugas','Nilai Akhir','Peringkat' ))
+    print('-'*114)
+    for i in data_mahasiswa:
+        print('|{:<25} |{:^15} |{:^12} |{:^12} |{:^12} |{:^12}| {:^12}|'.format(i[0],i[1],i[2],i[3],i[4],i[5],i[6]))
+    print('-'*114)
+
+    rata2_uts=rata_rata(data_mahasiswa, 2)
+    rata2_uas=rata_rata(data_mahasiswa, 3)
+    rata2_tugas=rata_rata(data_mahasiswa, 4)
+    rata2_nilai_akhir=rata_rata(data_mahasiswa, 5)
+    print('|{:^25} |{:^15} |{:^12} |{:^12} |{:^12} |{:^12}| {:^12}|'.format('Rata-rata','',rata2_uts,rata2_uas,rata2_tugas,rata2_nilai_akhir,' '))
+    print('-'*114)
+
+def tampilkan():
+    data= input_data( )
+    data= peringkat(data)
+    tabel(data)
+tampilkan()
+
