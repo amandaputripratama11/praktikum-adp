@@ -1,0 +1,78 @@
+#1
+data_buku = [
+    [9786025010010, "Dasar Pemrograman Python", "Andi Nugroho", 15, 75000, 95000],
+    [9786025010027, "Matematika Diskrit", "Rina Pratiwi", 10, 85000, 110000],
+    [9786025010034, "Algoritma dan Struktur Data", "Budi Santoso", 8, 90000, 120000],
+    [9786025010041, "Pemrograman Java untuk Pemula", "Sari Dewi", 12, 70000, 90000],
+    [9786025010058, "Statistika Terapan", "Joko Widodo", 5, 65000, 85000],
+    [9786025010065, "Basis Data MySQL", "Agus Prabowo", 20, 80000, 105000],
+    [9786025010072, "Jaringan Komputer Dasar", "Mira Anggraeni", 4, 78000, 100000],
+    [9786025010089, "Desain Web dengan HTML & CSS", "Fitri Handayani", 10, 60000, 80000],
+    [9786025010096, "Matematika Kalkulus", "Lina Marlina", 9, 95000, 130000],
+    [9786025010102, "Analisis Numerik", "Arif Setiawan", 3, 88000, 115000],
+]
+with open("inventaris_buku.txt", "w") as file:
+    for buku in data_buku:
+        file.write(str(buku[0]) + "\n")
+        file.write(buku[1] + "\n")
+        file.write(buku[2] + "\n")
+        file.write(str(buku[3]) + "\n")
+        file.write(str(buku[4]) + "\n")
+        file.write(str(buku[5]) + "\n")
+        file.write("--------------------------------\n")
+print("\nFile inventaris_buku.txt berhasil dibuat.")
+#2
+inventaris = []
+with open("inventaris_buku.txt", "r") as file:
+    data_baris = []
+    for baris in file:
+        baris = baris.strip()
+        if baris == "--------------------------------":
+            buku = {
+                "ISBN": data_baris[0],
+                "Judul": data_baris[1],
+                "Penulis": data_baris[2],
+                "Stok": int(data_baris[3]),
+                "Harga Beli": int(data_baris[4]),
+                "Harga Jual": int(data_baris[5])
+            }
+            inventaris.append(buku)
+            data_baris = []
+        else:
+            data_baris.append(baris)
+#3
+with open("laporan_inventaris.txt", "w") as file:
+    file.write("LAPORAN INVENTARIS BUKU\n\n")
+    for buku in inventaris:
+        keuntungan = (buku["Harga Jual"] - buku["Harga Beli"]) * buku["Stok"]
+        buku["Potensi Keuntungan"] = keuntungan
+        file.write(f'Judul      : {buku["Judul"]}\n')
+        file.write(f'Penulis    : {buku["Penulis"]}\n')
+        file.write(f'Stok       : {buku["Stok"]}\n')
+        file.write(f'Hrg Beli   : Rp{buku["Harga Beli"]}\n')
+        file.write(f'Hrg Jual   : Rp{buku["Harga Jual"]}\n')
+        file.write(f'Keuntungan : Rp{keuntungan}\n')
+        file.write("-" * 40 + "\n")
+print("File laporan_inventaris.txt berhasil dibuat.\n")
+#4
+tertinggi = inventaris[0]
+terendah = inventaris[0]
+total_nilai = 0
+restock = []
+for buku in inventaris:
+    if buku["Potensi Keuntungan"] > tertinggi["Potensi Keuntungan"]:
+        tertinggi = buku
+    if buku["Potensi Keuntungan"] < terendah["Potensi Keuntungan"]:
+        terendah = buku
+    total_nilai += buku["Harga Beli"] * buku["Stok"]
+    if buku["Stok"] < 5:
+        restock.append(buku)
+
+print("~~~~~~~~~~~~~~~~~~~~~~~Analisis Inventaris~~~~~~~~~~~~~~~~~~~~~~~")
+print(f'Buku dengan Keuntungan Tertinggi : {tertinggi["Judul"]} - Rp {tertinggi["Potensi Keuntungan"]:,}')
+print(f'Buku dengan Keuntungan Terendah  : {terendah["Judul"]} - Rp {terendah["Potensi Keuntungan"]:,}')
+print(f'Total Nilai Inventaris (Beli x Stok): Rp {total_nilai:,}')
+print("\nBuku yang perlu di-restock (stok < 5):")
+for b in restock:
+    print(f'- {b["Judul"]} (sisa stok: {b["Stok"]})')
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Selesai~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
