@@ -1,0 +1,39 @@
+from termcolor import colored, cprint
+import os
+import time
+cprint(" " * 25, "white", "on_red")
+logo = [
+    "",                                                                                
+    "     |||         ",
+    "     |||||       ",
+    "     ||||||||    ",
+    "     |||||       ",
+    "     |||         ",
+    ""
+]
+for baris in logo:
+    panjang_baris = len(baris)
+    bagian_kiri = (25 - panjang_baris) // 2
+
+    for i in range(25):
+        if i < bagian_kiri or i >= bagian_kiri + panjang_baris:
+            cprint(" ", "white", "on_red", end="")  
+        else:
+            char = baris[i - bagian_kiri]
+            if char != " ":
+                cprint(" ", "white", "on_white", end="")  
+            else:
+                cprint(" ", "white", "on_red", end="")  
+    print()
+cprint(" " * 25, "white", "on_red")
+print(colored("         YOUTOBE", "white", attrs=["bold"]))
+for i in range(21):
+    bar = colored('▶' * i, "white", attrs=["bold"]) + '-' * (20 - i)
+    persen = int(i / 20 * 100)
+    print(colored(f"\r{bar} {persen}%", "cyan", attrs=["bold"]), end="")
+    time.sleep(0.15)
+os.system("cls")
+print(colored("\n Aplikasi siap digunakan!\n", "cyan", attrs=["bold"]))
+time.sleep(2)
+os.system("cls")
+
